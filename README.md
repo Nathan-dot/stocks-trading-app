@@ -2,6 +2,18 @@
 
 Simulates an investment platform built with the MERN stack and uses Socket.IO for real-time updates. This project is not intended to reflect real world stock performances.
 
+## Demo GIFs
+
+
+**Browsing**
+
+![Browsing](./demo_gifs/MockStocksBrowsing.gif "Markets")
+
+**Purchasing Stocks**
+
+![Purchasing](./demo_gifs/MockStocksBuying.gif "Buying")
+
+
 **Stock**
 
 This project uses [JSON](https://www.json.org/json-en.html) to represent stock data in the form of:
