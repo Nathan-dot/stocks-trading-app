@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# Stocks Trading App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Simulates an investment platform built with the MERN stack and uses Socket.IO for real-time updates. This project is not intended to reflect real world stock performances.
 
-## Available Scripts
+**Stock**
 
-In the project directory, you can run:
+This project uses [JSON](https://www.json.org/json-en.html) to represent stock data in the form of:
 
-### `npm start`
+```json
+[
+  {
+    "id": 0,
+    "ticker": "String",
+    "exchange": "String",
+    "name": "String",
+    "initialPrice": 0.00,
+    "currentPrice": 0.00,
+    "description": "String",
+    "ipoDate": "String",
+    "siteURL": "String",
+    "industries": ["String", "String"],
+    "icon": "URL",
+    "favorited": true,
+    "timesBought": 0
+  }
+]
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The [schema](https://mongoosejs.com/docs/guide.html) of this model can be found in [`/backend/models/stock.js`](https://github.com/Nathan-dot/stocks-trading-app/blob/main/backend/models/stock.js)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Developing
 
-### `npm test`
+To run this application locally, you will need the following prerequisite programs:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Node.JS and NPM](https://nodejs.org/en/)
+- [Create React App](https://github.com/facebook/create-react-app)
+- [MongoDB](https://www.mongodb.com/)
 
-### `npm run build`
+**Back-End Setup**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+First, install the necessary packages via:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+npm i
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Refer to the [`package.json`] in the [`/backend`](https://github.com/Nathan-dot/stocks-trading-app/tree/main/backend) directory for more information about what is being installed.
 
-### `npm run eject`
+Then, setup the `.env` file in the root of the [`/backend`](https://github.com/Nathan-dot/stocks-trading-app/tree/main/backend) directory. (**Note**: this will be gitignored)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+# for mongodb connection
+MONGO_CONNECTION_STRING=mongo_secret_here
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# for authentication via signing tokens
+JWT_SECRET=jwt_secret_here
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# for guest account login (mongo objectID)
+GUEST_ID=guest_id_here
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Now you can spin up the backend. Default port is `5000`.
 
-## Learn More
+```bash
+# start server
+node .
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# explicit command
+node index.js
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Front-End Setup**
 
-### Code Splitting
+First, install the necessary packages via:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+npm i
+```
 
-### Analyzing the Bundle Size
+Refer to the [`package.json`](https://github.com/Nathan-dot/stocks-trading-app/blob/main/frontend/package.json) in the [`/frontend`](https://github.com/Nathan-dot/stocks-trading-app/tree/main/frontend) directory for more information about what is being installed.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Then, setup the `.env` file in the root of the [`/frontend`](https://github.com/Nathan-dot/stocks-trading-app/tree/main/frontend) directory. (**Note**: this will be gitignored) Also see that `REACT_APP_GUEST_EMAIL` and `REACT_APP_GUEST_PASS` take [base64](https://en.wikipedia.org/wiki/Base64) encoded strings. You can easily encode your credentials using this [site](https://www.base64encode.org/) or with the [btoa()](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa) function.
 
-### Making a Progressive Web App
+```bash
+# backend connection to REST API
+REACT_APP_STOCKS_API=api_url
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+# email of the guest account (encoded)
+REACT_APP_GUEST_EMAIL=base64_encoded_string
 
-### Advanced Configuration
+# password of the guest account (encoded)
+REACT_APP_GUEST_PASS=base64_encoded_string
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Now you can spin up the frontend. Default port is `3000` for a [create-react-app](https://github.com/facebook/create-react-app) project.
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+# start react app
+npm start
+```
